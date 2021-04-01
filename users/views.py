@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.models import Group
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.utils.translation import ugettext_lazy as _
 # Create your views here.
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 
 from users.forms import UserRegisterForm, StaffCreationForm
 from users.models import Staff, Guest
@@ -64,3 +65,18 @@ class GuestDetailView(DetailView):
     model = Guest
     title = _("Customer Information")
     raise_exception = True
+
+
+class ProfileView(TemplateView):
+    template_name = 'users/profile.html'
+    title = "Profile"
+    extra_context = {'title': title}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['information'] = get_object_or_404(Staff, user=self.request.user)
+            context['user_information'] = self.request.user
+        else:
+            raise Http404("Your are not logged in.")
+        return context

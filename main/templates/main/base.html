@@ -67,9 +67,9 @@
 			</h2>
 			{% if user.is_authenticated %}
 			<div class="user-wrapper">
-				<img src="{{ user.staff.imageURL }}" width="30px" height="30px" alt="">
+				 <a href="{% url 'profile' %}"><img src="{{ user.staff.imageURL }}" width="30px" height="30px" alt=""></a>
 				<div>
-					<h4>{{user.first_name}} {{user.last_name}}</h4>
+					<h4><a href="{% url 'profile' %}" style="">{{user.first_name}} {{user.last_name}}</a> </h4>
 					<small>{{user.staff.staff_id}}</small>
 				</div>
 			</div>

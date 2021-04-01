@@ -1,0 +1,30 @@
+
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="staffs">
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="media">
+                        <img src="{{ information.imageURL }}" class="rounded-circle account-img" height="200px" width="200px">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="staff-details">
+                          <div class="names">
+                              <h5>{{user_information.first_name}}</h5>
+                              <h5 class="ml-4">{{user_information.last_name}}</h5>
+                          </div>
+                        <h6>Staff ID<span>{{information.staff_id}}</span></h6>
+
+                        <p>Email <span>{{user_information.email}}</span></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

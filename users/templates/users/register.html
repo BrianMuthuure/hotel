@@ -1,5 +1,4 @@
 {% extends "main/base.html" %}
-{% load crispy_forms_tags %}
 {% block content %}
 <style>
     .text-muted:{
@@ -10,53 +9,71 @@
     <form method="post" enctype="multipart/form-data" class="">
         {% csrf_token %}
         <div class="form-row justify-content-center">
-            <div class="form-group col-md-3 mb-0">
-                {{ user_form.username|as_crispy_field }}
+            <div class="form-group col-md-4 mb-0">
+                <label class="label">Username</label>
+                {{ user_form.username}}
             </div>
-            <div class="form-group col-md-3 mb-0">
-                {{ user_form.first_name|as_crispy_field }}
+            <div class="form-group col-md-4 mb-0">
+                <label class="label">First Name</label>
+                {{ user_form.first_name}}
             </div>
-            <div class="form-group col-md-3 mb-0">
-                {{ user_form.last_name|as_crispy_field }}
+            <div class="form-group col-md-4 mb-0">
+                <label class="label">Last Name</label>
+                {{ user_form.last_name}}
             </div>
         </div>
         <div class="form-row justify-content-center">
-            <div class="form-group col-md-9 mb-0">
-                {{ user_form.email|as_crispy_field }}
+            <div class="form-group col-md-12 mb-0">
+                <label class="label">Email</label>
+                {{ user_form.email }}
+            </div>
+        </div>
+
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6 mb-0">
+                <label class="label">Password</label>
+                 <div style="display:flex;">
+                     {{ user_form.password1 }}
+                     <span class="las la-eye mt-2 ml-2" id="togglePassword" style="cursor:pointer;"></span>
+                 </div>
+            </div>
+            <div class="form-group col-md-6 mb-0" style="">
+                <label class="Confirm Password">Confirm Password</label>
+                <div style="display:flex;">
+                    {{ user_form.password2}}
+                    <span class="las la-eye mt-2 ml-2" id="togglePassword2" style="cursor:pointer;"></span>
+                </div>
+
             </div>
         </div>
 
         <div class="form-row justify-content-center">
             <div class="form-group col-md-4 mb-0">
-                {{ user_form.password1|as_crispy_field }}
+                <label class="label">dob</label>
+                {{ staff_form.date_of_birth }}
             </div>
-            <div class="form-group col-md-5 mb-0">
-                {{ user_form.password2|as_crispy_field }}
+            <div class="form-group col-md-4 mb-0">
+                <label class="label">Nationality</label>
+                {{ staff_form.nationality }}
+            </div>
+
+            <div class="form-group col-md-4 mb-0">
+                <label class="label">Gender</label>
+                {{ staff_form.gender }}
             </div>
         </div>
 
         <div class="form-row justify-content-center">
-            <div class="form-group col-md-3 mb-0">
-                {{ staff_form.date_of_birth|as_crispy_field }}
-            </div>
-            <div class="form-group col-md-3 mb-0">
-                {{ staff_form.nationality|as_crispy_field }}
-            </div>
-
-            <div class="form-group col-md-3 mb-0">
-                {{ staff_form.gender|as_crispy_field }}
+            <div class="form-group col-md-12 mb-0">
+                <label class="label">Role</label>
+                {{ staff_form.role }}
             </div>
         </div>
 
         <div class="form-row justify-content-center">
-            <div class="form-group col-md-9 mb-0">
-                {{ staff_form.role|as_crispy_field }}
-            </div>
-        </div>
-
-        <div class="form-row justify-content-center">
-            <div class="form-group col-md-9 mb-0">
-                {{ staff_form.image|as_crispy_field }}
+            <div class="col-md-12 mb-0">
+                <label class="label">Image</label>
+                {{ staff_form.image }}
             </div>
         </div>
 
@@ -68,4 +85,25 @@
 
     </form>
    </div>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password');
+    const togglePassword2 = document.querySelector('#togglePassword2');
+    const password2 = document.querySelector('#password2');
+
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') == 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('la-eye-slash');
+    });
+
+
+
+    togglePassword2.addEventListener('click', function (e) {
+        const type = password2.getAttribute('type') == 'password' ? 'text' : 'password';
+        password2.setAttribute('type', type);
+        this.classList.toggle('la-eye-slash');
+    });
+</script>
 {% endblock content %}
