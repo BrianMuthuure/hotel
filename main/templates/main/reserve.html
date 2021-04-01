@@ -1,0 +1,25 @@
+
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<section>
+    <div class="section-title">
+        <h2 class="text-center">Reserve Room</h2>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+     <div class="row justify-content-center" data-aos="fade-up">
+        <div class="col-md-6">
+            <fieldset class="form-group content-section">
+                {{ reservation_form|crispy }}
+            </fieldset>
+            <div class="form-group mt-4">
+                <button class="btn btn-primary " type="submit" style="margin-left:20px;width:50%;">Submit</button>
+            </div>
+        </div>
+     </div>
+    </form>
+</section>
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="staffs">
+    <div class="card">
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="media">
+                        <img src="{{object.imageURL}}" class="rounded-circle account-img" height="300px" width="300px">
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="staff-details">
+                          <div class="names">
+                              <h5>{{object.user.first_name}}</h5>
+                              <h5 class="ml-4">{{object.user.last_name}}</h5>
+                          </div>
+                        <h6>Staff ID<span>{{staff.staff_id}}</span></h6>
+
+                        <p>Email <span>{{staff.user.email}}</span></p>
+
+                        <p>Nationality <span>{{staff.nationality}}</span></p>
+                        <small>d.o.b<span>{{staff.date_of_birth}}</span></small><br>
+
+                        <small>Age<span>{{staff.age}}</span> years</small>
+
+                        <h5 class="mt-4">{{object.role}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

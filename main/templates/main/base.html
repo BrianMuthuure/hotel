@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="{% static 'main/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'main/line-awesome-1.3.0/1.3.0/css/line-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'main/toastr.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+</head>
+<body>
+	<input type="checkbox" id="nav-toggle">
+	<div class="sidebar">
+		<div class="sidebar-brand">
+			<h2><span class="lab la-accusoft"></span><span>Accusoft</span></h2>
+		</div>
+		<div class="sidebar-menu">
+			<ul>
+				<li>
+					<a href="{% url 'home' %}"><span class="las la-home"></span><span>Home</span></a>
+				</li>
+
+				<li>
+					<a href="{% url 'room_list' %}"><span class="las la-bed"></span><span>Rooms</span></a>
+				</li>
+
+				<li>
+					<a href="{% url 'staff_list' %}"><span class="las la-users"></span><span>Staff</span></a>
+				</li>
+                 {% if user.is_authenticated %}
+				<li>
+					<a href="{% url 'logout' %}"><span class="las la-power-off"></span><span>Logout</span></a>
+				</li>
+
+
+				<li>
+					<a href="{% url 'guest_list' %}"><span class="las la-users"></span><span>Customers</span></a>
+				</li>
+				<li>
+					<a href="{% url 'reservations' %}"><span class="las la-ticket-alt"></span><span>Reservations</span></a>
+				</li>
+				<li>
+					<a href="{% url 'check_in-list' %}"><span class="las la-calendar-check"></span><span>Check Ins</span></a>
+				</li>
+
+				<li>
+					<a href="{% url 'check_out-list' %}"><span class="lab la-codepen"></span><span>Check Outs</span></a>
+				</li>
+                 {% else %}
+				<li>
+					<a href="{% url 'login' %}"><span class="las la-sign-in-alt"></span><span>Login</span></a>
+				</li>
+                 {% endif %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="main-content">
+		<header>
+			<h2>
+				<label for="nav-toggle">
+					<span class="las la-bars"></span>
+				</label>
+				Dashboard
+			</h2>
+			{% if user.is_authenticated %}
+			<div class="user-wrapper">
+				<img src="{{ user.staff.imageURL }}" width="30px" height="30px" alt="">
+				<div>
+					<h4>{{user.first_name}} {{user.last_name}}</h4>
+					<small>{{user.staff.staff_id}}</small>
+				</div>
+			</div>
+			{% endif %}
+		</header>
+
+		<main>
+			{% block content %}
+			{% endblock content %}
+		</main>
+	</div>
+
+
+    <script src="{% static 'main/js/Jquery3.4.1.min.js' %}" ></script>
+    <script src="{% static 'main/js/bootstrap.min.js' %}" ></script>
+    <script src="{% static 'main/js/popper.min.js' %}" ></script>
+    <script src="{% static 'main/js/toastr.min.js' %}" ></script>
+
+      {% if messages %}
+         {% for message in messages %}
+            <script type=text/javascript>
+               toastr.options.progressBar = true;
+               toastr.{{ message.tags }}('{{ message }}')
+            </script>
+         {% endfor %}
+      {% endif %}
+
+
+<script>
+    $(window).on("load", function () {
+        if ($("form")) {
+            $("input[type!='submit']").addClass("form-control");
+            $("input[type='submit']").addClass("btn btn-primary")
+        }
+    });
+</script>
+{% block additional-javascript %}
+{% endblock %}
+</body>
+</html>

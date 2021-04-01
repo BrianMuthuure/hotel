@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}}
+{% block content %}
+<style>
+    .guest-details{
+
+    background: #fff;
+    padding: 2rem;
+    margin-top: 3.5rem;
+    }
+</style>
+<div class="guest-details">
+    <h1 class="text-center">{{ guest.last_name }} Details</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card">
+
+               <div class="card-header" >Id: {{ guest.guest_id }} </div>
+               <div class="card-body">First Name: {{ guest.first_name }} <br>
+                                Last Name: {{ guest.last_name }} </div>
+               <div class="card-footer">Contact No: {{ guest.phone_no }}</div>
+               <!-- Only if customer has email -->
+               <div class="card-footer">
+                   {% if guest.email %}
+                   Email Address: {{ guest.email }}
+                   {% endif %}
+               </div>
+               <div class="card-footer" >Nationality: {{ guest.nationality }} </div>
+            </div>
+      </div>
+</div>
+</div>
+
+{% endblock %}

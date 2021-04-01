@@ -1,0 +1,104 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+ <div class="row">
+      <div class="col-md-4 mt-4">
+
+          <div class="search-section">
+              <input type="search" placeholder="Search..."
+                   class="form-control search-input"
+                   data-table="staff-list"/>
+          </div>
+      </div>
+
+      <div class="col-md-4 mt-4">
+
+          <div class="add-room-btn">
+              <a class="btn btn-success btn-block" href="{% url 'register' %}">Register Staff</a>
+          </div>
+      </div>
+ </div>
+			<div class="recent-grid">
+				<div class="projects">
+					<div class="card">
+						<div class="card-header">
+							<h3>Employees</h3>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+							<table class="staff-list" width="100%">
+								<thead>
+									<tr>
+                                        <td>Staff ID</td>
+                                        <td>Image</td>
+                                        <td>Username</td>
+                                        <td>First Name</td>
+                                        <td>Last Name</td>
+                                        <td>Nationality</td>
+                                        <td>Gender</td>
+                                        <td>Position</td>
+									</tr>
+								</thead>
+
+								<tbody>
+                                     {% for staff in staffs %}
+									<tr>
+                                        <td><a href="{% url 'staff_detail' staff.pk %}" >{{staff.staff_id}}</a></td>
+                                        <td><img src="{{staff.imageURL}}" class="img-fluid" height="40px" width="40px"></td>
+                                        <td>{{staff.user.username}}</td>
+                                        <td>{{staff.user.first_name}}</td>
+                                        <td>{{staff.user.last_name}}</td>
+                                        <td>{{staff.nationality}}</td>
+                                        <td>{{staff.gender}}</td>
+                                        <td>{{staff.role}}</td>
+									</tr>
+                                     {% endfor %}
+								</tbody>
+							</table>
+						</div>
+						</div>
+					</div>
+				</div>
+            </div>
+
+
+    <script>
+        (function(document) {
+            'use strict';
+
+            var TableFilter = (function(myArray) {
+                var search_input;
+
+                function _onInputSearch(e) {
+                    search_input = e.target;
+                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
+                    myArray.forEach.call(tables, function(table) {
+                        myArray.forEach.call(table.tBodies, function(tbody) {
+                            myArray.forEach.call(tbody.rows, function(row) {
+                                var text_content = row.textContent.toLowerCase();
+                                var search_val = search_input.value.toLowerCase();
+                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
+                            });
+                        });
+                    });
+                }
+
+                return {
+                    init: function() {
+                        var inputs = document.getElementsByClassName('search-input');
+                        myArray.forEach.call(inputs, function(input) {
+                            input.oninput = _onInputSearch;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    TableFilter.init();
+                }
+            });
+
+        })(document);
+    </script>
+{% endblock content %}

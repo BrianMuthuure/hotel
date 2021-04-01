@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="room-detail">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+           <li class="breadcrumb-item"><a href="{% url 'room_list' %}">Rooms</a></li>
+           <li class="breadcrumb-item"><a href="{% url 'room_detail' room.pk %}">{{ room.room_id }}</a></li>
+           <li class="breadcrumb-item active" aria-current="page">Confirm deletion</li>
+        </ol>
+    </nav>
+    <h3 class="mb-3">Confirm deletion</h3>
+          <p class="lead">Are you sure you want to delete the room <strong>"{{ room.room_id }}"</strong>? There is no going back.</p>
+          <form method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger">Yes, I'm sure</button>
+              <a href="{% url 'room_list' %}" class="btn btn-outline-secondary " role="button">Nevermind</a>
+          </form>
+
+</div>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+  <div class="row">
+      <div class="col-md-4 mt-4">
+
+          <div class="search-section">
+              <input type="search" placeholder="Search..."
+                   class="form-control search-input"
+                   data-table="checkout-list"/>
+          </div>
+      </div>
+ </div>
+  <div class="recent-grid">
+      <div class="projects">
+          <div class="card">
+              <div class="card-header">
+                  <h4>Check Outs</h4>
+              </div>
+
+          <div class="card-body">
+              <div class="table-responsive">
+                  <table class="checkout-list" width="100%">
+                      <thead>
+                      <tr>
+
+                          <td>Check-Out ID</td>
+                          <td>Related Check-in</td>
+                          <td>Stay Duration</td>
+                          <td>Total Amount</td>
+                          <td>Pay Amount</td>
+                          <td>Checkout Date</td>
+                      </tr>
+                      </thead>
+
+            <tbody>
+            {% for check_out in checkout_list %}
+            <tr>
+                <td><a href="{% url 'check_out-detail' check_out.id %}">{{ check_out }}</a></td>
+                <td><a href="{% url 'check_in-detail' check_out.check_in.id %}">{{ check_out.check_in }}</a></td>
+                <td>{{ check_out.stay_duration }}</td>
+                <td>{{ check_out.total_amount }}</td>
+                <td>{{ check_out.pay_amount }}</td>
+                <td>{{ check_out.check_out_date_time }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+                  </table>
+
+      </div>
+          </div>
+          </div>
+      </div>
+  </div>
+
+
+
+    <script>
+        (function(document) {
+            'use strict';
+
+            var TableFilter = (function(myArray) {
+                var search_input;
+
+                function _onInputSearch(e) {
+                    search_input = e.target;
+                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
+                    myArray.forEach.call(tables, function(table) {
+                        myArray.forEach.call(table.tBodies, function(tbody) {
+                            myArray.forEach.call(tbody.rows, function(row) {
+                                var text_content = row.textContent.toLowerCase();
+                                var search_val = search_input.value.toLowerCase();
+                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
+                            });
+                        });
+                    });
+                }
+
+                return {
+                    init: function() {
+                        var inputs = document.getElementsByClassName('search-input');
+                        myArray.forEach.call(inputs, function(input) {
+                            input.oninput = _onInputSearch;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    TableFilter.init();
+                }
+            });
+
+        })(document);
+    </script>
+
+
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<style>
+
+.cards{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 2rem;
+	margin-top: 1rem;
+}
+.card-single{
+	display: flex;
+	justify-content: space-between;
+	background: #fff;
+	padding: 2rem;
+	border-radius: 2px;
+}
+.card-single div:last-child span{
+	color: var(--main-color);
+	font-size: 3rem;
+}
+
+.card-single div:first-child span{
+	color: var(--text-grey);
+}
+
+.card-single:last-child {
+	background-color: var(--main-color);
+}
+.card-single:last-child h1,
+.card-single:last-child div:first-child span,
+.card-single:last-child div:last-child span{
+	color: #fff;
+}
+
+@media only screen and (max-width: 960px){
+	.cards{
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.recent-grid{
+		grid-template-columns: 60% 40%;
+	}
+}
+
+@media only screen and (max-width: 768px){
+	.cards{
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+}
+@media only screen and (max-width: 560px){
+	.cards{
+		grid-template-columns: 100%;
+	}
+}
+</style>
+          <div class="cards">
+				<div class="card-single">
+					<div>
+						<h1>{{ total_num_rooms }}</h1>
+						<span>Rooms</span>
+					</div>
+
+					<div>
+						<span class="las la-bed"></span>
+					</div>
+				</div>
+
+				<div class="card-single">
+					<div>
+						<h1>{{ available_num_rooms }}</h1>
+						<span>Available</span>
+					</div>
+
+					<div>
+						<span class="las la-bed"></span>
+					</div>
+				</div>
+
+				<div class="card-single">
+					<div>
+						<h1>{{ total_num_reservations }}</h1>
+						<span>Reservations</span>
+					</div>
+
+					<div>
+						<span class="las la-bed"></span>
+					</div>
+				</div>
+
+				<div class="card-single">
+					<div>
+						<h1> {{ total_num_staffs }}</h1>
+						<span>Staffs</span>
+					</div>
+
+					<div>
+						<span class="las la-users"></span>
+					</div>
+				</div>
+
+				<div class="card-single">
+					<div>
+						<h1>{{ total_num_customers }}</h1>
+						<span>Customers</span>
+					</div>
+
+					<div>
+						<span class="las la-users"></span>
+					</div>
+				</div>
+            </div>
+{% endblock content %}

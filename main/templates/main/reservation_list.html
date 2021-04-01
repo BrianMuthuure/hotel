@@ -1,0 +1,160 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <form action="" method="post" id="checkin">{% csrf_token %}
+        {{ form }}
+    </form>
+  <div class="row">
+      <div class="col-md-4 mt-4">
+
+          <div class="search-section">
+              <input type="search" placeholder="Search..."
+                   class="form-control search-input"
+                   data-table="reservation-list"/>
+          </div>
+      </div>
+
+      <div class="col-md-4 mt-4">
+
+          <div class="add-room-btn">
+              <a class="btn btn-success btn-block" href="{% url 'reserve' %}">Create Reservation</a>
+          </div>
+      </div>
+ </div>
+  <div class="recent-grid">
+      <div class="projects">
+          <div class="card">
+              <div class="card-header">
+                  <h4>Reservations</h4>
+              </div>
+
+          <div class="card-body">
+              {% if reservation_list %}
+              <div class="table-responsive">
+                  <table class="reservation-list" width="100%">
+                      <thead>
+                      <tr>
+
+                          <td>Reservation</td>
+                          <td>Customer</td>
+                          <td>Children</td>
+                          <td>Adults</td>
+                          <td>Rooms</td>
+                          <td>Reservation Date</td>
+                          <td>Check In?</td>
+                      </tr>
+                      </thead>
+
+            <tbody>
+            {% for reservation in reservation_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'reservation-detail' reservation.reservation_id %}"> {{ reservation.reservation_id }}</a>
+                    </td>
+                    <td>{{ reservation.guest }}</td>
+                    <td>{{ reservation.no_children }}</td>
+                    <td>{{ reservation.no_adults }}</td>
+                    <td>
+                        {% for room in reservation.room_set.all %}
+                            <a href="{% url 'room_detail' room.room_id %}">{{ room.room_id }}</a>
+                        {% if not forloop.last %}
+                              ,
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ reservation.date}}</td>
+                    <td>{% if not reservation.checkin %}
+                        <button id="{{ reservation.reservation_id }}" type="button" class="btn btn-primary confirm-checkin"
+                                data-toggle="modal"
+                                data-target="#checkInConfirmBox">
+                            Check-In
+                        </button>
+
+                    {% else %}
+                        <a class="btn btn-secondary"
+                           href="{% url 'check_in-detail' reservation.checkin.id %}">Details</a>
+                    {% endif %}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+                  </table>
+
+        <div class="modal fade" id="checkInConfirmBox">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirm Check-In</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Do you want to confirm check-in?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" form="checkin">
+                            Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                     </div>
+                  </div>
+                </div>
+               </div>
+              </div>
+              {% endif %}
+            </div>
+           </div>
+        </div>
+      </div>
+
+{% block additional-javascript %}
+    <script>
+        $(document).ready(function () {
+            $(".confirm-checkin").click(function () {
+                var $id = $(this).attr("id");
+                $("#id_reservation").attr("value", $id);
+            });
+        });
+    </script>
+{% endblock %}
+
+
+    <script>
+        (function(document) {
+            'use strict';
+
+            var TableFilter = (function(myArray) {
+                var search_input;
+
+                function _onInputSearch(e) {
+                    search_input = e.target;
+                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
+                    myArray.forEach.call(tables, function(table) {
+                        myArray.forEach.call(table.tBodies, function(tbody) {
+                            myArray.forEach.call(tbody.rows, function(row) {
+                                var text_content = row.textContent.toLowerCase();
+                                var search_val = search_input.value.toLowerCase();
+                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
+                            });
+                        });
+                    });
+                }
+
+                return {
+                    init: function() {
+                        var inputs = document.getElementsByClassName('search-input');
+                        myArray.forEach.call(inputs, function(input) {
+                            input.oninput = _onInputSearch;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    TableFilter.init();
+                }
+            });
+
+        })(document);
+    </script>
+
+{% endblock %}

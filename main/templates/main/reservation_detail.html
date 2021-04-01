@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}}
+{% block content %}
+<style>
+    .reservation-details{
+
+    background: #fff;
+    padding: 2rem;
+    margin-top: 3.5rem;
+    }
+</style>
+<div class="reservation-details">
+{% block content-title %}
+    <h1 class="text-center">Reservation No. {{ reservation.reservation_id }} Details</h1>
+{% endblock %}
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-body">Guest: <a href="{% url 'guest_detail' reservation.guest_id %}">{{ reservation.guest }}</a></div>
+                <div class="card-footer">Children: <a href="">{{ reservation.no_children }}</a></div>
+
+                <div class="card-footer"> Adults: {{ reservation.no_adults }}</div>
+                <div class="card-footer">Reservation Date: {{ reservation.date }}</div>
+                <div class="card-footer">  Expected Arrival: {{ reservation.expected_arrival_date_time }}</div>
+                <div class="card-footer"> Expected Departure: {{ reservation.expected_departure_date_time }}</div>
+                <div class="card-footer">{% if reservation.room_set.all %}
+                Reserved Rooms:
+                {% for room in reservation.room_set.all %}
+                <strong><a href="{% url 'room_detail' room.room_id %}" class="">{{ room }}</a>{% if not forloop.last %}
+                , {% endif %}</strong>
+                {% endfor %}
+               {% endif %}
+               </div>
+            </div>
+      </div>
+</div>
+</div>
+
+{% endblock %}

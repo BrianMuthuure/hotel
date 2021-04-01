@@ -1,0 +1,89 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+      <div class="col-md-4 mt-4">
+
+          <div class="search-section">
+              <input type="search" placeholder="Search..."
+                   class="form-control search-input"
+                   data-table="guest-list"/>
+          </div>
+      </div>
+			<div class="recent-grid">
+				<div class="projects">
+					<div class="card">
+						<div class="card-header">
+							<h3>Customers</h3>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+							<table class="guest-list" width="100%">
+								<thead>
+									<tr>
+                                        <td>Customer ID</td>
+                                        <td>Names</td>
+                                        <td>Nationality</td>
+                                        <td>Gender</td>
+                                        <td>Age</td>
+									</tr>
+								</thead>
+
+								<tbody>
+                                     {% for guest in guest_list %}
+									<tr>
+                                        <td> <a href="">{{guest.guest_id}}</a></td>
+                                        <td>{{guest.first_name}} {{guest.last_name}}</td>
+                                        <td>{{guest.nationality}}</td>
+                                        <td>{{guest.gender}}</td>
+                                        <td>{{guest.age}}</td>
+									</tr>
+                                     {% endfor %}
+								</tbody>
+							</table>
+						</div>
+						</div>
+					</div>
+				</div>
+            </div>
+
+ </div>
+    <script>
+        (function(document) {
+            'use strict';
+
+            var TableFilter = (function(myArray) {
+                var search_input;
+
+                function _onInputSearch(e) {
+                    search_input = e.target;
+                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
+                    myArray.forEach.call(tables, function(table) {
+                        myArray.forEach.call(table.tBodies, function(tbody) {
+                            myArray.forEach.call(tbody.rows, function(row) {
+                                var text_content = row.textContent.toLowerCase();
+                                var search_val = search_input.value.toLowerCase();
+                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
+                            });
+                        });
+                    });
+                }
+
+                return {
+                    init: function() {
+                        var inputs = document.getElementsByClassName('search-input');
+                        myArray.forEach.call(inputs, function(input) {
+                            input.oninput = _onInputSearch;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    TableFilter.init();
+                }
+            });
+
+        })(document);
+    </script>
+{% endblock content %}

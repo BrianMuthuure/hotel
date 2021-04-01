@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %}
+{% block content %}
+  <div class="room-detail">
+      <div class="row">
+            <div class="col-md-6 mb-4">
+                <img src="{{ object.imageURL }}" height="300px" alt="" class="img-fluid">
+            </div>
+
+            <div class="col-md-3">
+                <div class="room-content">
+                    <div class="room-no mb-4">
+                       <h4>Room</h4>
+                       <span>{{object.room_id}}</span>
+                    </div>
+                   <h5>{{object.room_type}}</h5>
+
+                   <h6 class="text-center">Facilities</h6>
+                      {% for facility in object.room_type.facility.all %}
+                    <p class="las la-check"><span>{{ facility }}</span></p>
+                   {% endfor %}
+                </div>
+            </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-6">
+              <a class="btn btn-outline-success btn-sm btn-block mt-3" href="{% url 'add_image' room.pk %}">add new room images </a>
+          </div>
+      </div>
+    </div>
+
+<section class="photos">
+<!--Carousel Wrapper-->
+<div class="row ">
+    <div class="col-md-12">
+       <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                 {% for photo in photos %}
+                <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+                 {% endfor %}
+            </ol>
+        <div class="carousel-inner" role="listbox">
+                 {% for photo in photos %}
+        <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+              <img class="d-block w-100" src="{{photo.images.url}}" alt="First slide" style="height:400px;">
+                  <div class="carousel-caption d-none d-md-block">
+                     <h5>Happiness</h5>
+                     <p>Via data attributes Use data attributes to easily control the position of the carousel. data-slide accepts the keywords prev or next, which alters the slide position relative to its current </p>
+                  </div>
+         </div>
+      {% endfor %}
+                <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                       <span class="sr-only">Next</span>
+                </a>
+          </div>
+        </div>
+    </div>
+ </div>
+</section>
+{% endblock %}
