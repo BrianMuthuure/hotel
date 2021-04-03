@@ -16,6 +16,10 @@ class RoomType(models.Model):
         ('Double Suit', 'Double Suit'),
         ('Luxury Suit', 'Luxury Suit'),
         ('Exclusive Suit', 'Exclusive Suit'),
+        ('EXECUTIVE FLOOR', 'EXECUTIVE FLOOR'),
+        ('SUPERIOR ROOM', 'SUPERIOR ROOM'),
+        ('BUSINESS SUITE', 'BUSINESS SUITE'),
+        ('STATE SUITE', 'STATE SUITE')
     )
     facility = models.ManyToManyField('Facility', blank=True)
     name = models.CharField(choices=ROOMTYPES, max_length=30)
